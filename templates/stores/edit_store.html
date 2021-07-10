@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header><h1>Update Store</h1></header>
+    <section class="update-store-form">
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Jhon Lewis"
+                       value="{{ store.name }}"/>
+            </div>
+            <div class="form-group">
+                <label for="url_prefix">URL Prefix</label>
+                <input type="text" id="url_prefix" name="url_prefix" placeholder="https://..."
+                       value="{{ store.url_prefix }}">
+                <small id="url_prefix"  class="form-text text-muted">
+                    What URL will all its items start with?
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="tag_name">Tag Name</label>
+                <input type="text" id="tag_name" name="tag_name" placeholder="span" value="{{ store.tag_name }}">
+                <small id="tag_name" class="form-text text-muted">
+                    Enter HTML tag of the item that contains the price
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="query">HTML Query</label>
+                <input type="text" id="query" name="query" placeholder='{"class": "price_price--large"}'
+                       value="{{ store.query }}">
+                <small id="query" class="form-text text-muted">
+                    Under which price of the item would you like to get notified?
+                </small>
+            </div>
+            <button type="submit">Update</button>
+        </form>
+    </section>
+{% endblock %}

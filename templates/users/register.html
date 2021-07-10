@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header><h1>Register</h1></header>
+    <section class="register-form">
+        <form method="POST">
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="abc@de.com"/>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sing Up</button>
+
+        </form>
+    </section>
+{% endblock %}

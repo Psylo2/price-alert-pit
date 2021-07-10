@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header>
+        <h1>Alerts</h1>
+    </header>
+    <section>
+        <div class="list-group mb-3">
+            {% for alert in alerts %}
+                <div class="list-group-items">
+                    <h4 class="list-group-item-heading">{{ alert.name }}</h4>
+                    <p>
+                        {% if alert.notify_reach_price() %}
+                            <a>{{ alert.item_id }} (Now at:  {{ alert.item.price }})</a>
+                        {% else %}
+                            <a href="{{ alert.item.url }}">{{ alert.item_id }} (last price: {{ alert.item.price }})</a>
+                        {% endif %}
+                    </p>
+
+                    <a class="btn btn-secondary"
+                       href="{{ url_for('alerts.edit_alert_get', alert_id=alert._id) }}">Edit</a>
+                    <a class="btn btn-danger" href="{{ url_for('alerts.delete_alert', alert_id=alert._id) }}">Permanently
+                        Delete</a>
+                    {% if alert.notify_reach_price() %}
+                    <a class="btn btn-success" href="{{ alert.item.url }}">Item is under price limit of {{ alert.price_limit }}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <a class="btn btn-primary mt-3" href="{{ url_for('alerts.new_alert_get') }}">
+            Create new
+        </a>
+    </section>
+
+{% endblock %}
