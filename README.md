@@ -1,11 +1,11 @@
 # Price Alert Pit
 
 Build with:
-__Python 3.9.6__, __Flask 2.0__, __Jinja2__, __BeautifulSoup 4__ and  __MongoDB__
+__Flask 2.0__, __Jinja2__, __Pydantic__,  __BeautifulSoup 4__ and __MongoDB__
 
 Deployed over __Heroku__
 
-_https://price-alert-pit.herokuapp.com/_
+___https://price-alert-pit.herokuapp.com/___
 
 #
 
