@@ -44,4 +44,4 @@ app.register_blueprint(user_blueprint,
                        url_prefix="/users")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
