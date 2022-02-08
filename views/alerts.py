@@ -1,36 +1,31 @@
-from flask import Blueprint, render_template, request, url_for, redirect, session
+from flask import Blueprint, render_template, request, url_for, redirect
 
-from models.alert import Alert
-from models.item import Item
-from models.store import Store
 from models.user import requires_login
 
-
 alert_blueprint = Blueprint('alerts', __name__)
+alert_blueprint.handler = None
 
 
 @alert_blueprint.get('/')
 @requires_login
 def index():
-    _alerts = Alert.find_many_by('user_email', session['email'])
-    return render_template('alerts/index.html', alerts=_alerts)
+    try:
+        all_user_alerts = alert_blueprint.handler.all_user_alerts()
+        return render_template('alerts/index.html', alerts=all_user_alerts)
+    except Exception as e:
+        return e
 
 
 @alert_blueprint.post('/new')
 @requires_login
 def new_alert_post():
-    alert_name = request.form['name']
-    item_url = request.form['item_url']
-    price_limit = request.form['price_limit']
-    store = Store.find_by_url(item_url)
-    item = Item(item_url, store.tag_name, store.query)
-    item.fetch_price()
-    item.save_to_mongo()
-
-    Alert(alert_name, item._id,
-          float(price_limit),
-          session['email']).save_to_mongo()
-    return new_alert_get()
+    try:
+        alert_blueprint.handler.create_alert(alert_name=request.form['name'],
+                                             item_url=request.form['item_url'],
+                                             price_limit=request.form['price_limit'])
+        return new_alert_get()
+    except Exception as e:
+        return e
 
 
 @alert_blueprint.get('/new')
@@ -38,25 +33,34 @@ def new_alert_post():
 def new_alert_get():
     return render_template('alerts/new_alert.html')
 
+
 @alert_blueprint.get('/edit/<string:alert_id>')
 @requires_login
 def edit_alert_get(alert_id):
-    _alert = Alert.get_by_id(alert_id)
-    return render_template('alerts/edit_alert.html', alert=_alert)
+    try:
+        alert = alert_blueprint.handler.get_alert(alert_id=alert_id)
+        return render_template('alerts/edit_alert.html', alert=alert)
+    except Exception as e:
+        return e
+
 
 @alert_blueprint.post('/edit/<string:alert_id>')
 @requires_login
 def edit_alert_post(alert_id):
-    alert = Alert.get_by_id(alert_id)
-    price_limit = float(request.form['price_limit'])
-    alert.price_limit = price_limit
-    alert.save_to_mongo()
-    return redirect(url_for('.index'))
+    try:
+        price_limit = request.form['price_limit']
+        alert_blueprint.handler.update_alert(alert_id=alert_id, price_limit=price_limit)
+        return redirect(url_for('.index'))
+    except Exception as e:
+        return e
+
 
 @alert_blueprint.get('/delete/<string:alert_id>')
 @requires_login
 def delete_alert(alert_id):
-    alert = Alert.get_by_id(alert_id)
-    if alert.user_email == session['email']:
-        alert.remove_from_mongo()
-    return redirect(url_for('.index'))
+    try:
+        alert_blueprint.handler.delete_alert(alert_id=alert_id)
+        return redirect(url_for('.index'))
+    except Exception as e:
+        return e
+
