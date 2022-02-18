@@ -1,9 +1,9 @@
 from flask import session
 from typing import List, Union, Dict
 
-from usecases import AlertUseCase
-from handlers.services import AlertHandlerService
-from models.alert import AlertModel
+from application.handlers.usecases import AlertUseCase
+from application.handlers.services import AlertHandlerService
+from domain.models import AlertModel
 
 
 class AlertHandler(AlertUseCase, AlertHandlerService):

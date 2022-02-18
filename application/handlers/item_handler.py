@@ -5,9 +5,9 @@ from bs4 import BeautifulSoup
 
 from typing import List, Dict
 
-from usecases import ItemUseCase
-from handlers.services import ItemHandlerService
-from models.item import ItemModel
+from application.handlers.usecases import ItemUseCase
+from application.handlers.services import ItemHandlerService
+from domain.models import ItemModel
 
 
 class ItemHandler(ItemUseCase, ItemHandlerService):

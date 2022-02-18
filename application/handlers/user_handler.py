@@ -2,10 +2,12 @@ from flask import session, flash
 import uuid
 from typing import Union, Dict
 
-from usecases import UserUseCase
-from handlers.services import UserHandlerService
-from models.user import UserModel
 from manager.password_encryption import hash_password, check_password
+
+from application.handlers.usecases import UserUseCase
+from application.handlers.services import UserHandlerService
+from domain.models import UserModel
+
 
 
 class UserHandler(UserUseCase, UserHandlerService):
@@ -52,8 +54,5 @@ class UserHandler(UserUseCase, UserHandlerService):
         return True
 
     def _find_user_by_email(self, email: str) -> Union[Dict, None]:
-
-
         user = self._repository.find_one({"email": email})
-
         return user

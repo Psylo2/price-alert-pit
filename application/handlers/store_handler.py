@@ -2,9 +2,9 @@ import re
 import uuid
 from typing import List, Dict
 
-from usecases import StoreUseCase
-from handlers.services import StoreHandlerService
-from models.store import StoreModel
+from application.handlers.usecases import StoreUseCase
+from application.handlers.services import StoreHandlerService
+from domain.models import StoreModel
 
 
 class StoreHandler(StoreUseCase, StoreHandlerService):
