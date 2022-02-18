@@ -1,0 +1,4 @@
+from application.handlers.services.user_handler_service import UserHandlerService
+from application.handlers.services.alert_handler_service import AlertHandlerService
+from application.handlers.services.item_handler_service import ItemHandlerService
+from application.handlers.services.store_handler_service import StoreHandlerService
