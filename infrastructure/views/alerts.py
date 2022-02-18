@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, url_for, redirect
 
-from models.user import requires_login
+from domain.models.user import requires_login
 
 alert_blueprint = Blueprint('alerts', __name__)
 alert_blueprint.handler = None

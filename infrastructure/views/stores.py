@@ -2,7 +2,7 @@ import json
 
 from flask import Blueprint, render_template, request, redirect, url_for
 
-from models.user import requires_admin, requires_login
+from domain.models.user import requires_admin, requires_login
 
 store_blueprint = Blueprint('stores', __name__)
 store_blueprint.handler = None
