@@ -1,2 +1,0 @@
-from manager.services.repository_service import RepositoryServices
-from manager.services.app_configuration_service import AppConfigurationService

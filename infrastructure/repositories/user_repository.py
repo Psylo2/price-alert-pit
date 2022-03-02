@@ -1,20 +1,24 @@
 from typing import Dict, List
 
-from app import repository
-from manager.services import RepositoryServices
+from infrastructure.repositories.services import RepositoryServices
+from application.core.services import RepositoryInstanceService
 
 
 class UserRepository(RepositoryServices):
 
-    def __init__(self):
+    def __init__(self, repository_service: RepositoryInstanceService):
         self._repository_instance = None
         self._repository_name = "user"
+        self._repository_service = repository_service
 
     @property
     def repository(self):
         if not self._repository_instance:
-            self._repository_instance = repository.create_collection(self._repository_name)
+            self._repository_instance = self._repository_service.create_collection(self._repository_name)
         return self._repository_instance
+
+    def get_repository(self):
+        return self._repository_service.get_repository(repository_name=self._repository_name)
 
     def insert(self, data: dict) -> None:
         self.repository.insert_one(document=data)
